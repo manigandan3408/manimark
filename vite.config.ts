@@ -13,4 +13,16 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Only ever fetched when the desktop Hero lazy-loads it —
+          // never touched by the mobile bundle at all.
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          'motion-vendor': ['framer-motion'],
+        },
+      },
+    },
+  },
 });

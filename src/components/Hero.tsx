@@ -1,6 +1,12 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import { motion } from 'framer-motion';
-import HeroScene from '@/three/HeroScene';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import HeroLite from '@/components/HeroLite';
+
+// Lazy-loaded so the Three.js/@react-three bundle is only fetched
+// when the desktop 3D scene actually renders — mobile never
+// triggers this import at all (see the isMobile branch below).
+const HeroScene = lazy(() => import('@/three/HeroScene'));
 
 interface HeroProps {
   scrollProgress: React.MutableRefObject<number>;
@@ -8,14 +14,19 @@ interface HeroProps {
 
 export default function Hero({ scrollProgress }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   return (
     <section id="hero" ref={containerRef} className="relative h-screen w-full overflow-hidden">
-      {/* 3D Canvas — fills the entire hero */}
+      {/* Hero visual — full 3D scene on desktop, lightweight CSS mark on mobile */}
       <div className="absolute inset-0 z-10">
-        <Suspense fallback={<div className="w-full h-full bg-ink-950" />}>
-          <HeroScene scrollProgress={scrollProgress} />
-        </Suspense>
+        {isMobile ? (
+          <HeroLite />
+        ) : (
+          <Suspense fallback={<div className="w-full h-full bg-ink-950" />}>
+            <HeroScene scrollProgress={scrollProgress} />
+          </Suspense>
+        )}
       </div>
 
       {/* Ambient gradient overlays */}

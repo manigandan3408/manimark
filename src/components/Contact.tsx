@@ -94,7 +94,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-32 md:py-48 px-6 md:px-10 overflow-hidden">
       {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-accent/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[800px] md:h-[800px] rounded-full bg-accent/5 blur-2xl md:blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1600px] mx-auto relative">
         {/* Section header */}
