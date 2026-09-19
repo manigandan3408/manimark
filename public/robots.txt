@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://manimark-9wxo.onrender.com/sitemap.xml
